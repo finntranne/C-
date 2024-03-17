@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void solve()
+{
+    string A, B;
+    cin >> A >> B;
+    int l1 = A.length(), l2 = B.length();
+    vector<int> res(l1+l2,0);
+    int tmp1 = 0, sum;
+    for (int i = l1-1; i >= 0; i--)
+        {
+            int tmp2 = 0, carry = 0;
+            int m = A[i] - '0';
+            for (int j = l2-1; j >= 0; j--)
+            {
+                int n = B[j] - '0';
+                sum = m*n + carry + res[tmp1+tmp2];
+                carry = sum/10;
+                res[tmp1+tmp2] = sum%10;
+                tmp2++;
+            }
+            if (carry>0)
+                res[tmp1+tmp2]+=carry;
+            tmp1++;
+        }
+    int l = res.size() - 1;
+    while(l>=0 && res[l] == 0)
+        l--;
+    if(l<0)
+    {
+        cout << "0" << endl;
+        return;
+    }
+    for (int i = l; i >= 0; i--)
+    {
+        cout << res[i];
+    }
+    cout << endl;  
+}
+int main()
+{
+    int t;
+    cin >> t;
+    while(t--)
+        solve();
+    return 0;
+}
