@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int SIZE = 100;
+const int dX[4] = {0,0,1,-1};
+const int dY[4] = {1,-1,0,0};
+
+int A[SIZE][SIZE];
+int m, n;
+int mark[SIZE][SIZE] ;
+
+
+void enter(int A[][SIZE], int &m, int &n)
+{
+    cin >> m >> n;
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> A[i][j];
+}
+
+int loang(int x, int y)
+{
+    int count = 0;
+    queue<pair<int, int>> q;
+    q.push({x,y});
+    mark[x][y] = 1;
+    while(!q.empty())
+    {
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        count++;
+        for (int i = 0; i < 4; i++)
+            if(x + dX[i] > 0 && x +dX[i] <= m && y + dY[i] > 0 && y + dY[i] <= n && A[x + dX[i]][y + dY[i]] == 1 && !mark[x +dX[i]][y + dY[i]])
+            {
+                q.push({x + dX[i], y + dY[i]});
+                mark[x + dX[i]][y + dY[i]] = 1;
+            }
+    }
+    return count;
+}
+
+
+int main()
+{
+    vector<int> res;
+    enter(A,m,n);
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++)
+            if (A[i][j] == 1 && !mark[i][j])
+                res.push_back(loang(i,j));
+    cout << res.size() << endl;
+    sort(res.begin(),res.end());
+    for (int i = 0; i < res.size(); i++)
+    {
+        cout << res[i] << " ";
+    }
+    
+    return 0;
+}
