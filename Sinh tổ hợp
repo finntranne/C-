@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+#define SIZE 1000
+using namespace std;
+
+int giaiThua(int a)
+{
+    int res = 1;
+    for (int i = 2; i <= a; i++)
+    {
+        res *= i;
+    }
+   return res; 
+}
+
+void inp(int A[], int &n, int &m)
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+    {
+        A[i] = i;
+    }
+}
+
+int toHop(int k, int n)
+{
+    int res;
+    res = giaiThua(n)/(giaiThua((n-k))*giaiThua(k));
+    return res;
+}
+
+void sinhToHop(int A[], int m, int n)
+{
+    for (int i = 1; i <=m; i++)
+    {
+        cout << A[i];
+    }
+    cout << " ";
+    for (int i = 1; i < toHop(m,n); i++)
+    {
+        int j = m;
+        while(A[j] == n - m + j)
+            j--;
+        A[j]++;
+        for (int r = j + 1; r <= m; r++)
+            A[r] = A[r-1] + 1;
+        for (int i = 1; i <= m; i++)
+        {
+            cout << A[i];
+        }
+            cout << " ";            
+    }  
+}
+
+int main()
+{
+    int A[SIZE];
+    int n, m;
+    inp(A,n,m);
+    sinhToHop(A,m,n);
+    return 0;
+}
