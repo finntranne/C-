@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int toHop(int k, int n)
+{
+    if (k == n || k == 0)
+        return 1;
+    if (k == 1 || k == n - 1)
+        return n;
+    return toHop(k-1,n-1) + toHop(k,n-1);
+}
+
+void solve()
+{
+    int k, n ;
+    cin >> k >> n;
+    cout << toHop(k,n) << endl;
+}
+
+int main()
+{
+    // nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
