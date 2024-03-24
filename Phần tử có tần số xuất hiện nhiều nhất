@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void solve()
+{
+    int n, count = 0, countM = 0, res;
+    cin >> n;
+    vector<int> A(n);
+    for (int i = 0; i < n; i++)
+        cin >> A[i];
+    sort(A.begin(),A.end());
+    for (int i = 1; i < A.size(); i++)
+    {
+        if (A[i]==A[i-1])
+            count++;
+        else if (count > countM)
+        {
+            countM = count;
+            res = A[i-1];
+            count = 0;
+        }
+    }
+    cout << res << endl;
+}
+
+int main()
+{
+    // nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
