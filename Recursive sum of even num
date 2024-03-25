@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int sumEven(int n)
+{
+    if (n<10 && n%2==0)
+        return n;
+    if ((n%10)%2==0)
+        return n%10 + sumEven(n/10);
+    else
+        return sumEven(n/10);      
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << sumEven(n);
+    return 0;
+}
