@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int lonHon(int a, int b)
+{
+    if (a>b)
+        return a;
+    return b;
+}
+
+int maxEle(int A[], int n)
+{
+    if (n==2)
+        return lonHon(A[0],A[1]);
+    return lonHon(A[n-1],maxEle(A,n-1));
+}
+
+void solve()
+{
+    int A[1000];
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> A[i];
+    cout << maxEle(A,n);
+}
+
+int main()
+{
+    // nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
