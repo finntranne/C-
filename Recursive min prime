@@ -12,14 +12,23 @@ bool prime(int a)
     return true;
 }
 
-int minPrime(vector<int> A, int n, int i = 0, int min = INT_MAX)
+int nhoHon(int a, int b)
 {
-    if (i == n)
-        return min;
-    if (prime(A[i]) == true && A[i] < min)
-        min = A[i];
-    return
-        minPrime(A,n,i+1,min);
+    if (a<b)
+        return a;
+    return b;
+}
+
+int minPrime(vector<int> A, int n, int min = INT_MAX)
+{
+    if (n==1)
+        if (prime(A[0])==true)
+            return A[0];
+        else
+            return min;
+    if (prime(A[n-1])==true)
+        return nhoHon(A[n-1],minPrime(A,n-1));
+    return minPrime(A,n-1);
 }
 
 void solve()
