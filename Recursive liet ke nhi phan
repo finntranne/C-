@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int A[1000], n;
+
+void display()
+{
+    for (int i = 0; i < n; i++)
+        cout << A[i] << " ";
+    cout << endl;  
+}
+
+void lietKeBin(int i)
+{
+    for (int j = 0; j <= 1; j++)
+    {
+        A[i]=j;
+        if (i==n-1)
+            display();
+        else
+            lietKeBin(i+1);
+    }
+}
+
+void solve()
+{
+    cin >> n;
+    lietKeBin(0);   
+}
+
+int main()
+{
+    //Nhap so test case
+    int t;
+    cin >> t;
+    while(t--)
+        solve();
+    return 0;
+}
