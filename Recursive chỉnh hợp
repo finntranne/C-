@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int A[1000], n, k, B[1000] = {0};
+
+void display()
+{
+    for (int i = 0; i < k; i++)
+        cout << A[i] << " ";
+    cout << endl;
+}
+
+void chinhHop(int i)
+{
+    for (int j = 1; j <= n; j++)
+    {
+        if (B[j] == 0)
+        {
+            A[i] = j;
+            B[j] = 1;
+        }
+        else
+            continue;
+        if (i == k - 1)
+            display();
+        else
+            chinhHop(i + 1);
+        B[j] = 0;
+    }
+}
+
+void solve()
+{
+    cin >> n >> k;
+    chinhHop(0);
+}
+
+int main()
+{
+    // Nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
