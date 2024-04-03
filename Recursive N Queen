@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+#define MAX 100
+using namespace std;
+
+int A[MAX], col[MAX]={0}, d1[MAX], d2[MAX], n;
+
+void display()
+{
+    for (int i = 1; i <= n; i++)
+        cout << "(" << i << ", " << A[i] << ")";
+    cout << endl;
+}
+void Try(int i)
+{
+    for (int j = 1; j <= n; j++)
+    {
+        if (col[j] == 0 && d1[i - j + n] == 0 && d2[i + j - 1] == 0)
+        {
+            A[i] = j;
+            col[j] = d1[i - j + n] = d2[i + j - 1] = 1;
+            if (i==n)
+                display();
+            else
+                Try(i+1);
+            col[j] = d1[i - j + n] = d2[i + j - 1] = 0;
+        }   
+    }
+}
+
+void solve()
+{
+    cin >> n;
+    Try(1);
+}
+
+int main()
+{
+    //nhap so test case
+    int t;
+    cin >> t;
+    while(t--)
+        solve();    
+    return 0;
+}
