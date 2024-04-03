@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int A[1000], n, B[1000] = {0};
+
+void display()
+{
+    for (int  i = 0; i < n; i++)
+        cout << A[i] << " ";
+    cout << endl;
+}
+
+void tapCon(int k)
+{
+    if (k==n)
+        display();
+    else
+        for (int i = 1; i <= n; i++)
+            if (B[i]==0)
+            {
+                A[k]=i;
+                B[i]=1;
+                tapCon(k+1);
+                B[i]=0;
+            }
+}
+
+void solve()
+{
+    cin >> n;
+    tapCon(0);
+}
+
+int main()
+{
+    // Nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
