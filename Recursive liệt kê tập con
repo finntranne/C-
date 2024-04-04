@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int A[100], n;
+
+void display(int k)
+{
+    cout << "{ ";
+    for (int i = 1; i <= k; i++)
+        cout << A[i] << " ";
+    cout << "}" << endl;  
+}
+
+void tapCon(int i)
+{
+    if (A[i-1]==n)
+        return;
+    else
+    {
+        for (int j = A[i-1] + 1; j <= n ; j++)
+        {
+            A[i] = j;
+            display(i);
+            tapCon(i+1);
+        }
+    }
+}
+
+void solve()
+{
+    cin >> n;
+    cout << "{ }" << endl;
+    tapCon(1);
+}
+
+int main()
+{
+    // Nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
