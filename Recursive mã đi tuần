@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int A[10][10], n, dem = 0;
+int X[8] = {-2,-2,2,2,-1,1,-1,1};
+int Y[8] = {-1,1,-1,1,-2,-2,2,2};
+
+bool check(int x, int y)
+{
+    if (x>=0&&x<n&&y>=0&&y<n)
+        return true;
+    return false;
+}
+
+void display()
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j <n; j++)
+            cout << A[i][j] << "\t";
+        cout << endl;
+    }
+}
+
+void Try(int x, int y)
+{
+    ++dem;
+    A[x][y]=dem;
+    for (int k = 0; k < 8; k++)
+    {
+        if (dem == pow(n, 2))
+        {
+            display();
+            exit(0);
+        }
+        int xNext = x + X[k];
+        int yNext = y + Y[k]; 
+        if (check(xNext,yNext)==true&&A[xNext][yNext]==0)
+            Try(xNext,yNext);
+    }
+    --dem;
+    A[x][y] = 0;
+}
+
+void solve()
+{
+    int xPos, yPos;
+    cin >> n >> xPos >> yPos;
+    Try(xPos,yPos);
+    cout << "Khong tim thay duong";
+}
+
+int main()
+{
+    //nhap so test case
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        solve();
+    }
+    return 0;
+}
