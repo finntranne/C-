@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n;
+char cotNguon, cotTrungGian, cotDich;
+
+void thapHaNoi(int n, char cotNguon, char cotTrungGian, char cotDich)
+{
+    if (n==1)
+    {
+        cout << cotNguon << " -> " << cotDich << endl;
+        return;
+    }
+    thapHaNoi(n-1,cotNguon,cotDich,cotTrungGian);
+    cout << cotNguon << " -> " << cotDich << endl;
+    thapHaNoi(n-1,cotTrungGian,cotNguon,cotDich);
+}
+
+
+void solve()
+{
+    cin >> n >> cotNguon >> cotTrungGian >> cotDich;
+    thapHaNoi(n,cotNguon,cotTrungGian,cotDich);
+}
+
+int main()
+{
+    // Nhap so test case
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
+    return 0;
+}
