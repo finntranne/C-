@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+#define MAX  20
+#define MAXC 20*100+1
+using namespace std;
+
+int C[MAX][MAX];
+int X[MAX], bestWay[MAX];
+int T[MAX];
+bool mark[MAX];
+int n, m;
+int minCost;
+
+void enter()
+{
+    int i, j;
+    fstream input;
+    input.open("TOURISM.INP", ios::in);
+    input >> n >> m;
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            if (i==j)
+                C[i][j] = 0;
+            else
+                C[i][j] = MAXC;
+    for (int k = 1; k <= m; k++)
+    {
+        int tmp;
+        input >> i >> j >> tmp;
+        C[j][i] = tmp;
+        C[i][j]=tmp;
+    }
+    input.close();
+}
+
+void display()
+{
+    fstream output;
+    output.open("TOURISM.OUT", ios::out);
+    for (int i = 1; i <= n ; i ++)
+        output << bestWay[i] << " -> ";
+    output << 1 << endl << "Cost : " << minCost;
+    output.close();
+}
+
+void init()
+{
+    X[1] = 1;
+    T[1] = 0;
+    mark[1] = true;
+    minCost = MAXC;
+}
+
+void gan()
+{
+    for (int i = 1; i <= n; i++)
+        bestWay[i] = X[i];
+}
+void Try(int i)
+{
+    for (int j = 2; j <= n; j ++)
+        if (mark[j]==false)
+        {
+            X[i] = j;
+            T[i] = T[i-1] + C[X[i-1]][j];
+            if (T[i] < minCost)
+                if (i < n)
+                {
+                    mark[j] = true;
+                    Try(i+1);
+                    mark[j] = false;
+                }
+                else if (T[n] + C[X[n]][1] < minCost)
+                {
+                    gan();
+                    minCost = T[n] + C[X[n]][1];
+                }
+        }
+}
+
+int main()
+{
+    enter();
+    init();
+    Try(2);
+    if (minCost == MAXC)
+         cout << "No Solution";
+    else
+        display();
+    return 0;
+}
