@@ -1,0 +1,81 @@
+#include <bits/stdc++.h>
+#define MAX 10
+using namespace std;
+
+void enter(int A[MAX][MAX], int &n)
+{
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            cin >> A[i][j];
+}
+
+void capCanhSongSong(int A[MAX][MAX], int n)
+{
+    bool mark[MAX][MAX];
+    cout << "Cac cap canh song song la : ";
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            if (A[i][j]==2 && mark[i][j]==false && mark[j][i]==false)
+            {
+                cout << i << j << "//" << j << i << " ";
+                mark[i][j]=mark[j][i]=true;
+            }
+    cout << endl;        
+}
+
+void dinhTreo(int A[MAX][MAX], int n)
+{
+    cout << "Cac dinh treo la : ";
+    for (int i = 0; i < n; i++)
+    {
+        int tmp = 0;
+        for (int j = 0; j < n; j++)
+            tmp += A[i][j];
+        if (tmp == 1)
+            cout << i << " ";
+    }
+    cout << endl;
+}
+
+void dinhCoLap(int A[MAX][MAX], int n)
+{
+    cout << "Cac dinh co lap la : ";
+    for (int i = 0; i < n; i++)
+    {
+        int tmp = 0;
+        for (int j = 0; j < n; j++)
+            tmp += A[i][j];
+        if (tmp == 0)
+            cout << i << " ";
+    }
+    cout << endl;
+}
+
+void bacCuaDinh(int A[MAX][MAX], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        int tmp = 0;
+        cout << "Bac cua dinh " << i << " la : ";
+        for (int j = 0; j < n; j++)
+            if (i==j)
+                tmp+=2*A[i][j];
+            else
+                tmp+=A[i][j];
+        cout << tmp << endl;
+    }
+}
+
+
+int main()
+{
+    int A[MAX][MAX];
+    int n;
+    enter(A,n);
+    capCanhSongSong(A,n);
+    dinhTreo(A,n);
+    dinhCoLap(A,n);
+    bacCuaDinh(A,n);
+    return 0;
+}
