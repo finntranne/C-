@@ -44,8 +44,6 @@ void nuaBacTrong(int A[MAX][MAX], int n)
             tmp+=A[i][j];
         cout << tmp << endl;
     }
-
-
 }
 
 void nuaBacNgoai(int A[MAX][MAX], int n)
