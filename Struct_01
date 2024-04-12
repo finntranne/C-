@@ -1,0 +1,71 @@
+#include <iostream>
+#define SIZE 1000 
+using namespace std;
+
+struct student
+{
+    char MSSV[6];
+    char fullName[30];
+    char birthDay[11] ;
+    char location[50];
+    char sex[4];
+    float avg;
+};
+
+
+void enterStudent(student &a)
+{
+    cin.getline(a.MSSV, 6);
+    cin.getline(a.fullName, 30);
+    cin.getline(a.birthDay,11) ;
+    cin.getline(a.location, 50);
+    cin.getline(a.sex, 4);
+    cin >> a.avg;
+}
+
+void releaseStudent(student a)
+{
+    cout << a.MSSV << endl ;
+    cout << a.fullName << endl ;
+    cout << a.birthDay << endl ;
+    cout << a.location << endl ;
+    cout << a.sex << endl ;
+    cout << a.avg << endl ;
+}
+
+void enterArray(student A[], int &n)
+{
+    cin >> n ;
+    cin.ignore() ;
+    for (int i = 0 ; i < n ; i++)
+        {
+            cin.ignore();
+            enterStudent(A[i]) ;
+        }
+}
+
+void releaseArray(student A[], int n) 
+{
+    for ( int i = 0 ; i < n ; i++)
+        {
+            releaseStudent(A[i]) ;
+        }
+}
+
+int countStudentPass(student A[], int n)
+{
+    int count = 0 ;
+    for(int i = 0 ; i < n ; i++)
+        if (A[i].avg >= 5.0)
+            count++ ;
+    return count ;
+}
+int main()
+{
+    student A[SIZE] ;
+    int n ;
+    enterArray(A,n) ;
+    releaseArray(A,n) ;
+    cout << countStudentPass(A,n) ;
+    return 0;
+}
