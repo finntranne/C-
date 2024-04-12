@@ -1,0 +1,110 @@
+#include <iostream>
+using namespace std;
+
+struct DATE
+{
+    int day;
+    int month;
+    int year;
+};
+
+void enterTime(DATE &a)
+{
+        cin >> a.day;
+        cin >> a.month;
+        cin >> a.year;
+}
+
+bool namNhuan(DATE a)
+{
+    if ((a.year % 4 == 0 && a.year % 100 != 0) || a.year % 400 == 0)
+        return true;
+    return false;
+}
+
+int sttToNow(DATE a)
+{
+    int res = 0;
+    DATE i;
+    for (i.year = 1; i.year < a.year; i.year++)
+        if (namNhuan(i) == true)
+            res += 366;
+        else
+            res += 365;
+    res += a.day;
+    for (int i = 1; i < a.month; i++)
+        switch (i)
+        {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+        {
+            res += 31;
+            break;
+        }
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+        {
+            res += 30;
+            break;
+        }
+        case 2:
+        {
+            if (namNhuan(a) == true)
+                res += 29;
+            else
+                res += 28;
+            break;
+        }
+        }
+    return res;
+}
+
+bool checkDate(DATE a)
+{
+    if (a.day <= 0 || a.month <= 0 || a.month > 12 || a.year<=0)
+        return false ;
+    switch(a.month)
+    {
+        case 1 : case 3 : case 5 : case 7 : case 8 : case 10 : case 12 :
+        {
+            if (a.day <= 31)
+                return true ;
+            break ;
+        }
+        case 4 : case 6 : case 9 : case 11 :
+        {
+            if (a.day <= 30)
+                return true ;
+            break ;
+        }
+        case 2 :
+            if(namNhuan(a) == true && a.day <=29)
+                return true ;   
+    }
+    return false ;
+}
+int disTime(DATE a, DATE b)
+{
+    int res;
+    res = sttToNow(a) - sttToNow(b);
+    res = abs(res);
+    return res;
+}
+
+int main()
+{
+    DATE a, b;
+    enterTime(a);
+    enterTime(b);
+    if (checkDate(a) == true && checkDate(b) == true)
+        cout << disTime(a,b) ;
+    cout << sttToNow(a);
+    return 0;
+}
