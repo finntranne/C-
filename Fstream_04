@@ -1,0 +1,44 @@
+#include <iostream>
+#define SIZE 1000
+#include <fstream>
+using namespace std;
+
+void hoanDoi(int &a, int &b)
+{
+    int tmp = a ;
+        a = b ;
+        b = tmp ;
+}
+
+void tangDan(int A[] ,int &n)
+{
+    int x, y ;
+    fstream input;
+    input.open("outfile03.txt", ios::in);
+    input >> n ;
+    for (int i = 0; i < n; i++)
+    {
+        input >> A[i] ;
+    }
+    for (int  i = 0; i < n-1; i++)
+        for (int j = i + 1 ; j < n ; j++)
+        {
+           if (A[i]>A[j])
+                hoanDoi(A[i], A[j]) ;
+        }
+    input.close() ;
+    fstream output;
+    output.open("outfile04.txt", ios::out);
+    for (int i = 0; i < n; i++)
+    {
+        output << A[i] << " " ;
+    }
+    output.close();
+}
+int main()
+{
+    int A[SIZE] ;
+    int n ;
+    tangDan(A,n) ;
+    return 0;
+}
