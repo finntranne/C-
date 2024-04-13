@@ -1,0 +1,15 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main()
+{
+    int a, b, c ;
+    cin >> a >> b >> c ;
+    fstream output ;
+    output.open("outfile01.txt", ios::out);
+    output << a ;
+    output << " " << b ;
+    output << " " << c ;
+    output.close() ;
+    return 0 ;
+}
