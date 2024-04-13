@@ -1,0 +1,32 @@
+#include <iostream>
+#include <math.h>
+#include <fstream>
+using namespace std;
+
+bool checkPrime(int a)
+{
+    if (a <2)
+        return false ;
+    for (int i = 2; i <= sqrt(a); i++)
+    {
+        if (a % i == 0)
+            return false ;
+    }
+    return true ;
+}
+
+int main()
+{
+    int n, x, count = 0 ;
+    fstream input;
+    input.open("outfile03.txt", ios:: in);
+    input >> n ;
+    for (int i = 0; i < n; i++)
+    {
+        input >> x ;
+        if (checkPrime(x) == true)
+            count ++ ;
+    }
+    cout << count ;
+    return 0;
+}
