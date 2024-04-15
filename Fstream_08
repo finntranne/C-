@@ -1,0 +1,63 @@
+#include <iostream>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct student
+{
+    char MSSV[6];
+    char fullName[30];
+    char birthDay[11];
+    char location[50];
+    char sex[4];
+    float avg;
+};
+
+void enterStudent(student &a, fstream &output)
+{
+    cin.getline(a.MSSV, 6);
+    output << a.MSSV << endl;
+    cin.getline(a.fullName, 30);
+    output << a.fullName << endl;
+    cin.getline(a.birthDay, 11);
+    output << a.birthDay << endl;
+    cin.getline(a.location, 50);
+    output << a.location << endl;
+    cin.getline(a.sex, 4);
+    output << a.sex << endl;
+    cin >> a.avg;
+    output << a.avg << endl;
+}
+
+int countStudentPass(student A[], int n)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+        if (A[i].avg >= 5.0)
+            count++;
+    return count;
+}
+
+void outFile(student A[], int &n)
+{
+    cout << "Nhap so hoc sinh : ";
+    cin >> n;
+    cin.ignore();
+    fstream output;
+    output.open("outfile08.txt", ios::out);
+    for (int i = 0; i < n; i++)
+    {
+        cin.ignore();
+        enterStudent(A[i],output);
+    }
+    output << countStudentPass(A,n);
+    output.close();
+}
+
+int main()
+{
+    student A[SIZE];
+    int n;
+    outFile(A,n);
+    return 0;
+}
