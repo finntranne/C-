@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+#define MAX 100
+using namespace std;
+
+void gan(int A[MAX], int a, int b)
+{
+    for (a; a<b;a++)
+        A[a]=0;
+}
+
+void display(int A[MAX], int n)
+{
+    for (int i = 0; i < n; i++)
+        cout << A[i];
+    cout <<  endl;
+}
+
+void geneBin(int A[MAX], int n)
+{
+    for (int j = 0; j < pow(2,n); j++)
+    {
+        display(A,n);
+        int i = n-1;
+        while(i >= 0 && A[i]==1)
+            i--;
+        if (i >= 0)
+        {
+            A[i]=1;
+            gan(A,i+1,n);
+        }
+    }
+}
+
+int main()
+{
+    int A[MAX], n;
+    cin >> n;
+    gan(A,0,n);
+    geneBin(A,n);
+    return 0;
+}
