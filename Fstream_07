@@ -1,0 +1,27 @@
+#include <iostream>
+#include <time.h>
+#include <fstream>
+using namespace std;
+int main()
+{
+    int n , x ;
+    cin >> n ;
+    fstream output;
+    output.open("outfile07.txt", ios::out);
+    for (int  i = 0; i < n; i++)
+    {
+        output << rand() << "\t" ;
+        if (i%15==14)
+            output << endl ;
+    }
+    output.close() ;
+    fstream input ;
+    input.open("outfile07.txt", ios::in);
+    for (int i = 0; i < n; i++)
+    {
+        input >> x ;
+        cout << x <<"\t" ;
+    }
+    input.close() ;
+    return 0;
+}
