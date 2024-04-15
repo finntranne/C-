@@ -1,0 +1,19 @@
+#include <iostream>
+#include <conio.h>
+#include <fstream>
+using namespace std;
+int main()
+{
+    int c ;
+    string str ;
+    fstream output;
+    output.open("outfile06.txt", ios::out) ;
+    do
+    {
+        getline(cin,str) ;
+        output << str << endl ;
+        c = getch();
+    } while (c!=27);
+    output.close() ;
+    return 0;
+}
