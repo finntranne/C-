@@ -1,0 +1,149 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct matHang
+{
+    char maHang[10];
+    char tenMatHang[30];
+    int soLuong;
+    int donGia;
+    int soLuongTon;
+    int timeBaoHanh ;
+};
+
+void enter1MatHang(matHang &a, fstream &input)
+{
+    input.ignore();
+    input.getline(a.maHang,10);
+    input.getline(a.tenMatHang,30);
+    input >> a.soLuong;
+    input >> a.donGia;
+    input >> a.soLuongTon;
+    input >> a.timeBaoHanh;
+
+}
+
+void enterAllMatHang(matHang A[], int &n)
+{
+    cin >> n;
+    fstream input;
+    input.open("infile10.txt", ios::in);
+    for (int i = 0; i < n; i++)
+    {
+        enter1MatHang(A[i],input);
+    }  
+}
+
+void releaseMatHang(matHang A[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << A[i].maHang << endl;
+        cout << A[i].tenMatHang << endl;
+        cout << A[i].soLuong << endl;
+        cout << A[i].donGia << endl;
+        cout << A[i].soLuongTon << endl;
+        cout << A[i].timeBaoHanh << endl;
+    }
+    
+}
+
+void releaseToFile(matHang A[], int n, fstream &output)
+{
+    for (int i = 0; i < n; i++)
+    {
+        output << A[i].tenMatHang << "\t";
+    }
+}
+
+void maxSoLuongTon(matHang A[], int n, fstream &output)
+{
+    int max = A[0].soLuongTon;
+    int pos = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if(A[i].soLuongTon > max)
+        {
+            max = A[i].soLuongTon;
+            pos = i;
+        }
+    }
+    output << A[pos].tenMatHang << endl;
+}
+
+void minSoLuongTon(matHang A[], int n, fstream &output)
+{
+    int min = A[0].soLuongTon;
+    int pos = -1;
+    for (int i = 1; i < n; i++)
+    {
+        if (A[i].soLuongTon < min)
+        {
+            min = A[i].soLuongTon;
+            pos = i;
+        }
+    }
+    output << A[pos].tenMatHang << endl;
+}
+
+void maxDonGia(matHang A[], int n, fstream &output)
+{
+    int max = A[0].donGia;
+    int pos = -1;
+    for (int i = 1; i < n; i++)
+    {
+        if (A[i].donGia > max)
+        {
+            max = A[i].donGia;
+            pos = i;
+        }
+    }
+    output << A[pos].tenMatHang << endl;
+}
+
+void timeBaoHanhLonHon12(matHang A[],int n, fstream &output)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i].timeBaoHanh > 12)
+            output << A[i].tenMatHang << "\t";
+    } 
+}
+
+void sapXep(matHang &a, matHang &b)
+{
+    matHang tmp = a;
+    a = b;
+    b = tmp;
+}
+
+void sapXepTangDanSoLuongTon(matHang A[], int n)
+{
+    for (int i = 0; i < n-1; i++)
+        for (int j = i + 1; j < n; j++)
+        {
+            if (A[i].soLuongTon > A[j].soLuongTon)
+                sapXep(A[i],A[j]);
+        }
+        
+}
+int main()
+{
+    matHang A[SIZE] ;
+    int n ;
+    enterAllMatHang(A,n);
+    releaseMatHang(A,n);
+    fstream output;
+    output.open("outfile10.txt", ios::out);
+    maxSoLuongTon(A,n,output);
+    minSoLuongTon(A,n,output);
+    maxDonGia(A,n,output);
+    timeBaoHanhLonHon12(A,n,output);
+    output << endl;
+    sapXepTangDanSoLuongTon(A,n);
+    releaseToFile(A,n,output);
+    return 0;
+}
