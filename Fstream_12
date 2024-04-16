@@ -1,0 +1,113 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct VD
+{
+    char nameMovie[50];
+    char theLoai[10];
+    char nameDirector[30];
+    char nameMan[30];
+    char nameWoman[30];
+    int year;
+    char hangSX[30];
+};
+
+void enter1VD(VD &a)
+{
+    cin.ignore();
+    cin.getline(a.nameMovie,50);
+    cin.getline(a.theLoai,10);
+    cin.getline(a.nameDirector,30);
+    cin.getline(a.nameMan,30);
+    cin.getline(a.nameWoman,30);
+    cin >> a.year;
+    cin.ignore();
+    cin.getline(a.hangSX,30);
+}
+
+void release1VD(VD a, fstream &output)
+{
+    output << a.nameMovie << endl;
+    output << a.theLoai << endl;
+    output << a.nameDirector << endl;
+    output << a.nameMan << endl;
+    output << a.nameWoman << endl;
+    output << a.year << endl;
+    output << a.hangSX << endl;
+}
+
+void enterAllVD(VD A[], int &n)
+{
+    cout << "Nhap so VIDEO : ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enter1VD(A[i]);
+    } 
+}
+
+void releaseAllVD(VD A[], int &n, fstream &output)
+{
+    for (int i = 0; i < n; i++)
+    {
+        release1VD(A[i],output);
+        output << endl;
+    }
+    
+}
+
+
+void findTheLoai(VD A[], int n, fstream &output)
+{
+    char tmp[10];
+    cout << "Nhap the loai film : ";
+    cin.getline(tmp,10);
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(A[i].theLoai,tmp) == 0)
+            release1VD(A[i],output);
+    } 
+}
+
+void findNameMan(VD A[], int n, fstream &output)
+{
+    char tmp[30];
+    cout << "Nhap ten nam dien vien : ";
+    cin.getline(tmp, 30);
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(A[i].nameMan, tmp) == 0)
+            release1VD(A[i], output);
+    }
+}
+
+void findNameDirector(VD A[], int n, fstream &output)
+{
+    char tmp[30];
+    cout << "Nhap ten dao dien : ";
+    cin.getline(tmp, 30);
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(A[i].nameDirector, tmp) == 0)
+            release1VD(A[i], output);
+    }
+}
+
+int main()
+{
+    VD A[SIZE], a;
+    int n;
+    enterAllVD(A,n);
+    fstream output;
+    output.open("outfile12.txt", ios::out);
+    findTheLoai(A,n,output);
+    output << endl;
+    findNameMan(A,n,output);
+    output << endl;
+    findNameDirector(A,n,output);
+    output.close();
+    return 0;
+}
