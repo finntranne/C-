@@ -1,0 +1,184 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct sinhVien
+{
+    char MSV[10];
+    char name[30];
+    int namSinh;
+    float toan;
+    float ly;
+    float hoa;
+    float avg;
+};
+
+void enter1SV(sinhVien &a)
+{
+    cin.ignore();
+    cin.getline(a.MSV,10);
+    cin.getline(a.name,30);
+    cin >> a.namSinh;
+    cin >> a.toan;
+    cin >> a.ly;
+    cin >> a.hoa;
+    cin >> a.avg;
+}
+
+void release1SV(sinhVien a, fstream &output)
+{
+    output << a.MSV << endl;
+    output << a.name << endl;
+    output << a.namSinh << endl;
+    output << a.toan << endl;
+    output << a.ly << endl;
+    output << a.hoa << endl;
+    output << a.avg << endl;
+}
+
+void releaseToScreen(sinhVien a )
+{
+    cout << a.MSV << endl;
+    cout << a.name << endl;
+    cout << a.namSinh << endl;
+    cout << a.toan << endl;
+    cout << a.ly << endl;
+    cout << a.hoa << endl;
+    cout << a.avg << endl;
+}
+void docfile(sinhVien A[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+       releaseToScreen(A[i]); 
+    }
+}
+void enterAllSV(sinhVien A[], int &n)
+{
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enter1SV(A[i]);
+    }
+}
+
+void releaseAllSV(sinhVien A[], int n, fstream &output)
+{
+    for (int i = 0; i < n; i++)
+    {
+        release1SV(A[i],output);
+    }
+    
+}
+
+void findSVMaxAvg(sinhVien A[], int n)
+{
+    float max = A[0].avg;
+    int pos = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if(A[i].avg > max)
+        {
+            max = A[i].avg;
+            pos = i;
+        }
+    }
+    releaseToScreen(A[pos]);
+}
+
+void sapXep(sinhVien &a, sinhVien &b)
+{
+    sinhVien tmp = a;
+    a = b;
+    b = tmp;
+}
+
+void sapXepTangDanDiemTB(sinhVien A[], int n)
+{
+    for (int i = 0; i < n-1; i++)
+        for (int j = i+1; j < n; j++)
+        {
+            if (A[i].avg > A[j].avg)
+                sapXep(A[i],A[j]);
+        }  
+}
+
+void sapXepGiamDanDiemToan(sinhVien A[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+        for (int j = i + 1; j < n; j++)
+        {
+            if (A[i].toan < A[j].toan)
+                sapXep(A[i], A[j]);
+        }
+}
+
+void findSVLonHon5(sinhVien A[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i].avg > 5 && A[i].toan >= 3 && A[i].ly >= 3 && A[i].hoa >=3 )
+        {
+            releaseToScreen(A[i]);
+            cout << endl;
+        }
+    }
+}
+
+void findSVOldest(sinhVien A[], int n)
+{
+    int old = A[0].namSinh;
+    int pos = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i].namSinh < old)
+        {
+            old = A[i].namSinh;
+            pos = i;
+        }
+    }
+    releaseToScreen(A[pos]);
+}
+
+void findSVByName(sinhVien A[], int n)
+{
+    char tmp[30];
+    cout << "Nhap ten can tim : ";
+    cin.ignore();
+    cin.getline(tmp,30);
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(tmp,A[i].name) == 0)
+            releaseToScreen(A[i]);
+    }
+    
+}
+int main()
+{
+    sinhVien A[SIZE];
+    int n;
+    enterAllSV(A,n);
+    fstream outputa;
+    outputa.open("outfile11a.txt", ios::out);
+    releaseAllSV(A,n,outputa);
+    outputa.close();
+    cout << "Danh sach sinh vien :" << endl;
+    docfile(A,n);
+    cout << "Sinh vien co diem trung binh cao nhat :" << endl;
+    findSVMaxAvg(A,n);
+    sapXepTangDanDiemTB(A,n);
+    fstream outputd;
+    outputd.open("outfile11d.txt", ios::out);
+    releaseAllSV(A,n,outputd);
+    outputd.close();
+    sapXepGiamDanDiemToan(A,n);
+    cout << "Danh sach sinh vien sap xep giam dan diem toan : " << endl;
+    docfile(A,n);
+    cout << "Sinh vien co diem trung binh lon hon 5 va khong co mon nao duoi 3 :" << endl;
+    findSVLonHon5(A,n);
+    cout << "Sinh vien lon tuoi nhat : " << endl;
+    findSVOldest(A,n);
+    findSVByName(A,n);
+    return 0;
