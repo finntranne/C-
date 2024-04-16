@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+#define MAX 100
+using namespace std;
+
+void enter(int A[MAX], int &n)
+{
+     cin >> n;
+     for (int i = 0; i < n; i++)
+        cin >> A[i];
+}
+
+bool checkAmstrong(int a)
+{
+    vector<int> A;
+    int cnt = 0, sum = 0, tmp = a ;
+    while(a>0)
+    {
+        A.push_back(a%10);
+        a/=10;
+        cnt++;
+    }
+    for (int i = 0; i < A.size(); i++)
+    {
+        sum+=pow(A[i],cnt);
+    }
+    if (sum==tmp)
+        return true;
+    return false;
+}
+
+int sumAmstrong(int A[MAX], int n)
+{
+	int res = 0;
+	for (int i = 0; i < n; i++)
+		if (checkAmstrong(A[i]) == true)
+			res += A[i];
+	return res;
+}
+
+int main()
+{
+	int A[MAX], n;
+	enter(A,n);
+    cout << sumAmstrong(A,n);
+    return 0;
+}
