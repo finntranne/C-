@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct mayTinh
+{
+    char loaiMay[30];
+    char noiSX[50];
+    int timeBaoHanh;
+};
+
+void enter1MayTinh(mayTinh &a)
+{
+    cin.ignore();
+    cin.getline(a.loaiMay,30);
+    cin.getline(a.noiSX,50);
+    cin >> a.timeBaoHanh;
+}
+
+void releaseToFile(mayTinh a, fstream &output)
+{
+    output << a.loaiMay << endl;
+    output << a.noiSX << endl;
+    output << a.timeBaoHanh << endl;
+}
+
+void enterALlMayTinh(mayTinh A[], int &n, fstream &output)
+{
+    cout << "Nhap so may tinh : ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enter1MayTinh(A[i]);
+        releaseToFile(A[i],output);
+    }
+}
+
+void release1MayTinh(mayTinh a)
+{
+    cout << a.loaiMay << endl;
+    cout << a.noiSX << endl;
+    cout << a.timeBaoHanh << endl;
+}
+
+int countMayTinh1NamBaoHanh(mayTinh A[], int n)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if(A[i].timeBaoHanh == 1)
+            count++;
+    }
+    return count;
+}
+
+void noiSXFromMy(mayTinh A[], int n)
+{
+    char tmp[3] = "my";
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(tmp,A[i].noiSX) == 0)
+            release1MayTinh(A[i]);
+    }
+    
+}
+int main()
+{
+    mayTinh A[SIZE];
+    int n;
+    fstream output;
+    output.open("outfile14.txt", ios::out);
+    enterALlMayTinh(A,n,output);
+    output.close();
+    cout << "So may tinh co thoi gian bao hanh 1 nam la : " << countMayTinh1NamBaoHanh(A,n) << endl;
+    cout << "Danh sach may tinh co xuat xu tai My la : " << endl;
+    noiSXFromMy(A,n);
+    return 0;
+}
