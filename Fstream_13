@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct book
+{
+    char MaSSach[10];
+    char TenSach[50];
+    char TacGia[30];
+    int SL;
+};
+
+void enter1Book(book &a)
+{
+    cin.ignore();
+    cin.getline(a.MaSSach,10);
+    cin.getline(a.TenSach,50);
+    cin.getline(a.TacGia,30);
+    cin >> a.SL;
+}
+
+void enterAllBook(book A[], int &n)
+{
+    cout << "Nhap so sach : ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enter1Book(A[i]);
+    }  
+}
+
+void release1Book(book a)
+{
+    cout << a.MaSSach << endl;
+    cout << a.TenSach << endl;
+    cout << a.TacGia << endl;
+    cout << a.SL << endl;
+}
+
+void releaseToFile(book a, fstream &output)
+{
+    output << a.MaSSach << endl;
+    output << a.TenSach << endl;
+    output << a.TacGia << endl;
+    output << a.SL << endl;
+}
+
+void releaseAllToFlie(book A[], int n, fstream &output)
+{
+    for (int i = 0; i < n; i++)
+    {
+        releaseToFile(A[i],output);
+    }
+}
+void findTenSach(book A[], int n)
+{
+    char tmp[50];
+    bool flag = false;
+    cin.ignore();
+    cout << "Nhap ten sach : ";
+    cin.getline(tmp,50);
+    for (int i = 0; i < n; i++)
+    {
+        if (stricmp(A[i].TenSach,tmp) == 0)
+        {
+            release1Book(A[i]);
+            flag = true;
+        }
+    }
+    if (flag == false)
+        cout << "Khong Tim Thay";
+}
+
+int totalBook(book A[], int n)
+{
+    int res = 0;
+    for (int i = 0; i < n; i++)
+    {
+        res +=A[i].SL;
+    }
+    return res;
+}
+    
+
+int main()
+{
+    book A[SIZE];
+    int n;
+    enterAllBook(A, n);
+    fstream output;
+    output.open("outfile13.txt", ios:: out);
+    releaseAllToFlie(A,n,output);
+    output.close();
+    findTenSach(A,n);
+    cout << "Tong so sach la : " << totalBook(A,n);
+    return 0;
+}
