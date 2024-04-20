@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string.h>
+#include <fstream>
+#define SIZE 100
+using namespace std;
+
+struct linhKien
+{
+    char nameLK[30];
+    char quyCach[30];
+    char loaiMay[2];
+    int donGia1;
+    int donGia2;
+};
+
+void enter1LK(linhKien &a)
+{
+    cin.ignore();
+    cin.getline(a.nameLK,30);
+    cin.getline(a.quyCach,30);
+    cin.getline(a.loaiMay,2);
+    cin >> a.donGia1;
+    cin >> a.donGia2;
+}
+
+void release1LK(linhKien a)
+{
+    cout << a.nameLK << endl;
+    cout << a.quyCach << endl;
+    cout << a.loaiMay << endl;
+    cout << a.donGia1 << endl;
+    cout << a.donGia2 << endl;
+}
+
+void releaseAllLK(linhKien A[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        release1LK(A[i]);
+    }
+    
+}
+void enterAllLK(linhKien A[], int &n)
+{
+    cout << "Nhap so linh kien : ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enter1LK(A[i]);
+    }  
+}
+
+void sapXep(linhKien &a, linhKien &b)
+{
+    linhKien tmp = a;
+    a = b;
+    b = tmp;
+}
+
+void sapXepTangDan(linhKien A[], int n)
+{
+    for (int i = 0; i < n-1; i++)
+        for (int j = i + 1; j < n; j++)
+        {
+            if (strcmp(A[i].loaiMay,A[j].loaiMay) >= 0 && strcmp(A[i].nameLK,A[j].nameLK) >= 0)
+                sapXep(A[i],A[j]);
+        }
+}
+
+int main()
+{
+    linhKien A[SIZE];
+    int n;
+    enterAllLK(A,n);
+    sapXepTangDan(A,n);
+    cout << "Danh sach cac linh kien theo thu tu tang dan loai va ten linh kien : " << endl;
+    releaseAllLK(A,n);
+    return 0;
+}
